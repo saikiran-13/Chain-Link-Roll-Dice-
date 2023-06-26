@@ -105,7 +105,7 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
     ) internal override {
         require(s_requests[_requestId].exists, "request not found");
         s_requests[_requestId].fulfilled = true;
-        s_requests[_requestId].randomWords = _randomWords;
+        s_requests[_requestId].randomWords[0] = _randomWords[0]%6+1;
         emit RequestFulfilled(_requestId, _randomWords);
     }
 
@@ -117,7 +117,5 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
         return (request.fulfilled, request.randomWords);
     }
 
-    function rolldice(uint _requestId) external view returns(uint){
-        return ((s_requests[_requestId].randomWords[0])%6)+1;
-    }
+
 }
